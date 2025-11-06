@@ -1,0 +1,40 @@
+@startuml
+title Diagrama de Colaboración - Inventar.io
+
+actor Administrador as Admin
+actor Empleado as Emp
+actor Proveedor as Prov
+
+participant "Interfaz del Sistema" as UI
+participant "Módulo de Inventario" as Inventario
+participant "Módulo de Reportes" as Reportes
+participant "Base de Datos" as DB
+participant "Módulo de Alertas" as Alertas
+
+== Registro de nuevo producto ==
+Prov -> UI : 1. Solicita registrar producto
+UI -> Inventario : 2. Envía datos del producto
+Inventario -> DB : 3. Guarda información
+DB -> UI : 4. Confirma registro exitoso
+
+== Consulta de inventario ==
+Admin -> UI : 5. Solicita ver inventario
+UI -> Reportes : 6. Solicita datos
+Reportes -> DB : 7. Obtiene información
+DB -> UI : 8. Devuelve lista de productos
+
+== Salida de productos ==
+Emp -> UI : 9. Registra salida
+UI -> Inventario : 10. Envía solicitud
+Inventario -> DB : 11. Actualiza existencias
+Inventario -> Alertas : 12. Verifica stock y alerta si es necesario
+Alertas -> Admin : 13. Notifica stock bajo
+
+== Generación de reporte ==
+Admin -> UI : 14. Solicita reporte general
+UI -> Reportes : 15. Genera resumen
+Reportes -> DB : 16. Obtiene datos actuales
+DB -> UI : 17. Envía reporte final
+
+@enduml
+
