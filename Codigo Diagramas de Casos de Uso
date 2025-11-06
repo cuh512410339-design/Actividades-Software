@@ -1,0 +1,57 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+title Inventar.io – Diagrama General de Casos de Uso
+
+actor "Administrador" as Admin
+actor "Empleado" as Emp
+actor "Proveedor" as Prov
+actor "Sistema" as Sys
+
+rectangle "Inventar.io" {
+  
+  package "Módulo de Inventario" {
+    usecase "Registrar nuevo producto" as UC1
+    usecase "Registrar salida de producto" as UC2
+    usecase "Verificar stock disponible" as UC3
+  }
+  
+  package "Módulo de Consultas" {
+    usecase "Consultar inventario completo" as UC4
+    usecase "Buscar producto específico" as UC5
+  }
+  
+  package "Módulo de Alertas" {
+    usecase "Detectar productos con poco stock" as UC6
+    usecase "Enviar notificación de alerta" as UC7
+  }
+  
+  package "Base de Datos Local" {
+    usecase "Guardar datos de productos" as UC8
+    usecase "Actualizar cantidad de stock" as UC9
+  }
+}
+
+' Relaciones de los actores con los casos de uso
+Admin --> UC1
+Admin --> UC2
+Admin --> UC4
+Admin --> UC5
+Admin --> UC7
+
+Emp --> UC2
+Emp --> UC4
+Emp --> UC5
+
+Prov --> UC1
+
+Sys --> UC6
+UC6 --> UC7
+
+UC1 --> UC8
+UC2 --> UC9
+UC3 --> UC9
+UC6 --> UC9
+
+@enduml
