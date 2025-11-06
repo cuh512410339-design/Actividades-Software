@@ -1,0 +1,34 @@
+@startuml
+title Diagrama de Flujo – Registro de Productos en Inventar.io
+
+start
+
+:Iniciar sesión en el sistema;
+:Mostrar menú principal;
+:Seleccionar opción "Registrar nuevo producto";
+
+if (¿Producto ya existe?) then (Sí)
+  :Solicitar cantidad a agregar;
+  :Actualizar cantidad existente;
+else (No)
+  :Solicitar datos del nuevo producto;
+  :Validar datos ingresados;
+  if (¿Datos correctos?) then (Sí)
+    :Guardar nuevo producto en la base de datos;
+  else (No)
+    :Mostrar mensaje de error;
+    :Volver a solicitar datos;
+  endif
+endif
+
+:Mostrar inventario actualizado;
+
+repeat
+  :¿Desea registrar otro producto?;
+repeat while (Respuesta = "Sí")
+
+:Generar reporte de productos actualizados;
+:Mostrar mensaje de finalización;
+
+stop
+@enduml
