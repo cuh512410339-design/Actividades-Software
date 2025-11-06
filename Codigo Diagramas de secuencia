@@ -1,0 +1,53 @@
+@startuml
+title Diagrama General de Secuencia – Inventar.io
+
+actor "Administrador" as Admin
+actor "Empleado" as Emp
+actor "Proveedor" as Prov
+participant "Interfaz Inventar.io" as UI
+participant "Módulo Inventario" as Inventario
+participant "Módulo Consultas" as Consultas
+participant "Módulo Alertas" as Alertas
+database "Base de Datos Local" as DB
+actor "Sistema" as Sys
+
+== Registro de nuevo producto ==
+Prov -> UI: Solicitud de registro de producto
+UI -> Inventario: Enviar datos del producto
+Inventario -> DB: Guardar producto en base de datos
+DB --> Inventario: Confirmación de registro
+Inventario --> UI: Mostrar mensaje de éxito
+UI --> Prov: Producto registrado correctamente
+
+== Registro de salida de producto ==
+Emp -> UI: Solicitar registro de salida
+UI -> Inventario: Enviar datos de salida
+Inventario -> DB: Verificar stock disponible
+alt Stock insuficiente
+  Inventario -> Alertas: Generar alerta de bajo stock
+  Alertas -> Admin: Notificación de stock bajo
+else Stock suficiente
+  Inventario -> DB: Actualizar cantidad
+  DB --> Inventario: Confirmación
+  Inventario --> UI: Mostrar mensaje de salida exitosa
+end
+
+== Consulta de inventario ==
+Admin -> UI: Consultar inventario
+UI -> Consultas: Solicitar lista de productos
+Consultas -> DB: Obtener datos de productos
+DB --> Consultas: Enviar resultados
+Consultas --> UI: Mostrar inventario
+UI --> Admin: Mostrar resultados
+
+== Generar alertas automáticas ==
+Sys -> Inventario: Revisar niveles de stock
+Inventario -> DB: Obtener cantidades
+DB --> Inventario: Enviar datos
+loop Por cada producto
+  alt Cantidad menor al mínimo
+    Inventario -> Alertas: Generar alerta automática
+    Alertas -> Admin: Enviar notificación
+  end
+end
+@enduml
