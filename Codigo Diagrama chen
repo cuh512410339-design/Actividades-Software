@@ -1,0 +1,64 @@
+digraph ER_Chen {
+  graph [splines=true, overlap=false, rankdir=LR];
+  node [fontname="Arial"];
+
+  // === ENTIDADES ===
+  node [shape=box, style=filled, fillcolor=lightblue];
+  Usuario Producto Proveedor Categoria Movimiento;
+
+  // === RELACIONES (ROMBOS) ===
+  node [shape=diamond, style=filled, fillcolor=lightgrey];
+  Realiza Afecta Suministra Clasifica;
+
+  // === ATRIBUTOS (Óvalos) ===
+  node [shape=ellipse, style=filled, fillcolor=white];
+  id_usuario nombre_usuario usuario_login contraseña rol
+  id_producto nombre_producto descripcion stock precio
+  id_proveedor nombre_proveedor telefono direccion
+  id_categoria nombre_categoria descripcion_cat
+  id_movimiento tipo cantidad fecha
+
+  // === CONEXIONES ===
+  Usuario -> Realiza [label="1"];
+  Movimiento -> Realiza [label="N"];
+
+  Producto -> Afecta [label="1"];
+  Movimiento -> Afecta [label="N"];
+
+  Proveedor -> Suministra [label="1"];
+  Producto -> Suministra [label="N"];
+
+  Categoria -> Clasifica [label="1"];
+  Producto -> Clasifica [label="N"];
+
+  // === ATRIBUTOS DE USUARIO ===
+  Usuario -> id_usuario;
+  Usuario -> nombre_usuario;
+  Usuario -> usuario_login;
+  Usuario -> contraseña;
+  Usuario -> rol;
+
+  // === ATRIBUTOS DE PRODUCTO ===
+  Producto -> id_producto;
+  Producto -> nombre_producto;
+  Producto -> descripcion;
+  Producto -> stock;
+  Producto -> precio;
+
+  // === ATRIBUTOS DE PROVEEDOR ===
+  Proveedor -> id_proveedor;
+  Proveedor -> nombre_proveedor;
+  Proveedor -> telefono;
+  Proveedor -> direccion;
+
+  // === ATRIBUTOS DE CATEGORIA ===
+  Categoria -> id_categoria;
+  Categoria -> nombre_categoria;
+  Categoria -> descripcion_cat;
+
+  // === ATRIBUTOS DE MOVIMIENTO ===
+  Movimiento -> id_movimiento;
+  Movimiento -> tipo;
+  Movimiento -> cantidad;
+  Movimiento -> fecha;
+}
