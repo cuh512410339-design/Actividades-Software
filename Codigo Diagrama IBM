@@ -1,0 +1,15 @@
+digraph ER_IBM {
+  rankdir=LR;
+  node [shape=record, style=filled, fillcolor=lightyellow, fontname="Arial"];
+
+  USUARIOS [label="{USUARIOS|+ id_usuario: INT (PK)\l+ nombre: VARCHAR(100)\l+ usuario: VARCHAR(50)\l+ contraseña: VARCHAR(50)\l+ rol: VARCHAR(20)}"];
+  PRODUCTOS [label="{PRODUCTOS|+ id_producto: INT (PK)\l+ nombre: VARCHAR(100)\l+ descripcion: TEXT\l+ stock: INT\l+ precio_unitario: DECIMAL(10,2)\l+ id_categoria: INT (FK)\l+ id_proveedor: INT (FK)}"];
+  PROVEEDORES [label="{PROVEEDORES|+ id_proveedor: INT (PK)\l+ nombre: VARCHAR(100)\l+ telefono: VARCHAR(20)\l+ direccion: VARCHAR(150)}"];
+  CATEGORIAS [label="{CATEGORIAS|+ id_categoria: INT (PK)\l+ nombre: VARCHAR(50)\l+ descripcion: TEXT}"];
+  MOVIMIENTOS [label="{MOVIMIENTOS|+ id_movimiento: INT (PK)\l+ tipo: VARCHAR(20)\l+ cantidad: INT\l+ fecha: DATE\l+ id_usuario: INT (FK)\l+ id_producto: INT (FK)}"];
+
+  USUARIOS -> MOVIMIENTOS [label="realiza"];
+  PRODUCTOS -> MOVIMIENTOS [label="afecta"];
+  PROVEEDORES -> PRODUCTOS [label="suministra"];
+  CATEGORIAS -> PRODUCTOS [label="clasifica"];
+}
