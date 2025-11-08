@@ -1,0 +1,30 @@
+@startuml
+title Diagrama de Estados - Ciclo de vida de un Producto (Inventar.io)
+
+[*] --> Registrado : Registro nuevo producto
+
+state Registrado {
+  [*] --> EsperandoValidación
+  EsperandoValidación --> Activo : Validar información
+  EsperandoValidación --> Rechazado : Error de datos
+}
+
+Activo --> EnInventario : Producto disponible
+EnInventario --> EnMovimiento : Se genera entrada/salida
+EnMovimiento --> EnInventario : Movimiento completado
+
+EnInventario --> Agotado : Stock = 0
+Agotado --> Reabasteciendo : Solicitud a proveedor
+Reabasteciendo --> EnInventario : Entrada registrada
+
+Activo --> Inactivo : Desactivación manual
+Inactivo --> Eliminado : Confirmación de eliminación
+Eliminado --> [*]
+
+note right of EnMovimiento
+  Aquí ocurren las operaciones
+  de entrada o salida registradas
+  por el usuario del sistema.
+end note
+
+@enduml
